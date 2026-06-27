@@ -32,10 +32,9 @@ python3 -m http.server 8080
 
 ## Application form
 
-`apply.html` POSTs JSON to the Butterbase function
-`https://api.butterbase.ai/v1/app_oh23tcj73owo/fn/apply`, which writes to the
-`lbk_applications` table and mirrors to the LBK Fellowship Applications Google
-Sheet. Field id → payload key mapping lives in `js/site.js` (`MAP`).
+`apply.html` POSTs JSON to a Butterbase serverless function, which persists the
+application server-side. The endpoint and the field id → payload key mapping live
+in `js/site.js` (`MAP`). No credentials are needed or stored client-side.
 
 ## Deploy (Butterbase static)
 
