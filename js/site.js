@@ -170,6 +170,7 @@
   function setupApplyForm() {
     var form = document.getElementById('applyForm');
     if (!form) return;
+    var t0 = Date.now(); // when the form became interactive — feeds the server timing trap
     var ENDPOINT = 'https://api.butterbase.ai/v1/app_oh23tcj73owo/fn/apply';
     var MAP = {
       name: 'a_name', email: 'a_email', links: 'a_links', team: 'a_team',
@@ -197,8 +198,17 @@
       if (!val('a_email').trim()) return fail("Name, email, and what you're building are required.", 'a_email');
       if (!EMAIL_RE.test(val('a_email').trim())) return fail('Please enter a valid email address.', 'a_email');
       if (!val('a_building').trim()) return fail("Name, email, and what you're building are required.", 'a_building');
+      // honeypot: real users never fill the hidden field. If it's set, fake success and don't send.
+      if (val('a_hp').trim() !== '') {
+        form.reset();
+        if (btn) { btn.textContent = 'Application received'; }
+        if (msg) msg.textContent = "Thanks — we'll be in touch.";
+        return;
+      }
       var payload = {};
       for (var k in MAP) payload[k] = val(MAP[k]);
+      payload.website = val('a_hp');           // honeypot (server-side trap)
+      payload.form_ms = Date.now() - t0;       // fill time (server-side timing trap)
       if (btn) { btn.disabled = true; btn.style.opacity = '0.6'; btn.textContent = 'Submitting…'; }
       if (msg) msg.textContent = '';
       fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
