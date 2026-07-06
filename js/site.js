@@ -8,7 +8,8 @@
   var motion = !reduce;
   var ACCENT = '#FFD473';
   var accentColor = function () {
-    var v = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    // read off <body> so page-scoped themes (body.theme-green) are honored
+    var v = getComputedStyle(document.body).getPropertyValue('--accent').trim();
     return v || ACCENT;
   };
 
