@@ -3,10 +3,11 @@
    Yellow editorial. Mobile-first.
    ============================================================ */
 :root{
-  --accent:#FFD473;
-  --gold-deep:#8A6A00;
+  --accent:#E04E26;
+  --accent-hover:#C43D18;
+  --accent-deep:#8F2E10;
   --ink:#000000;
-  --paper:#F6F4F1;
+  --paper:#F5F2EC;
   --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;
   --mono:'Space Mono',ui-monospace,'SF Mono',Menlo,monospace;
   --header-h:64px;
@@ -50,8 +51,8 @@ canvas{display:block}
    ============================================================ */
 .site-header{
   position:fixed;top:0;left:0;right:0;height:var(--header-h);z-index:2000;
-  background:var(--accent);display:flex;align-items:center;justify-content:space-between;
-  padding:0 var(--pad-x);border-bottom:1px solid rgba(0,0,0,.16);
+  background:var(--paper);display:flex;align-items:center;justify-content:space-between;
+  padding:0 var(--pad-x);border-bottom:1px solid rgba(0,0,0,.14);
 }
 .brand{display:flex;align-items:center;gap:11px;font-weight:700;font-size:18px;letter-spacing:-.02em;color:#000}
 .brand .mark{width:13px;height:13px;background:#000;display:inline-block}
@@ -64,7 +65,7 @@ canvas{display:block}
 .nav-links a:hover{border-bottom-color:#000}
 .nav-links a[aria-current="page"]{border-bottom-color:#000}
 .nav-cta{
-  background:#000;color:#fff;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  background:#000;color:#fff;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
   padding:11px 20px;border-radius:100px;display:inline-flex;align-items:center;gap:8px;transition:background .18s;
 }
 .nav-cta:hover{background:#1a1a1a}
@@ -81,7 +82,7 @@ canvas{display:block}
 
 /* mobile drawer */
 .mobile-nav{
-  position:fixed;inset:var(--header-h) 0 0 0;z-index:1900;background:var(--accent);
+  position:fixed;inset:var(--header-h) 0 0 0;z-index:1900;background:var(--paper);
   display:flex;flex-direction:column;padding:28px var(--pad-x) 40px;gap:4px;
   transform:translateY(-12px);opacity:0;pointer-events:none;visibility:hidden;
   transition:opacity .28s ease,transform .28s ease,visibility .28s;
@@ -122,7 +123,7 @@ main{display:block;background:var(--ink)}
 .bg-accent{background:var(--accent);color:#000}
 
 .section-head .eyebrow{margin-bottom:26px}
-.section-head .eyebrow.gold{color:var(--gold-deep)}
+.section-head .eyebrow.gold{color:var(--accent-deep)}
 .section-head .eyebrow.acc{color:var(--accent)}
 .h2{margin:0;font-weight:800;font-size:clamp(30px,4.6vw,64px);line-height:1.02;letter-spacing:-.035em;text-wrap:balance}
 .lead{margin:28px 0 0;max-width:680px;font-size:clamp(16px,1.4vw,21px);line-height:1.5}
@@ -133,7 +134,7 @@ main{display:block;background:var(--ink)}
    HERO (home)
    ============================================================ */
 .hero{
-  background:var(--accent);color:#000;min-height:100svh;
+  background:var(--paper);color:#000;min-height:100svh;
   padding:calc(var(--header-h) + 36px) var(--pad-x) 30px;
   display:flex;flex-direction:column;justify-content:space-between;gap:clamp(28px,4vh,52px);
   position:relative;overflow:hidden;
@@ -160,7 +161,7 @@ main{display:block;background:var(--ink)}
 }
 .hero-card-head{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
 .hero-card-head .live{display:inline-flex;align-items:center;gap:7px}
-.hero-card-head .dot{width:7px;height:7px;border-radius:50%;background:#000;display:inline-block}
+.hero-card-head .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block}
 .hero-card canvas{flex:1;width:100%;min-height:175px}
 .hero-card .thesis-link{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:44px;padding:11px 2px;font-size:15px;font-weight:600;letter-spacing:-.01em;border-top:1px solid rgba(0,0,0,.14);transition:opacity .18s}
 .hero-card .thesis-link:hover{opacity:.55}
@@ -194,7 +195,7 @@ main{display:block;background:var(--ink)}
 }
 .bg-ink .thesis-grid{border-top-color:rgba(255,255,255,.16)}
 .thesis-card canvas{width:100%;height:92px;margin-bottom:28px}
-.thesis-card .num{font-family:var(--mono);font-size:clamp(40px,5vw,72px);font-weight:700;color:var(--gold-deep);line-height:1;letter-spacing:-.03em}
+.thesis-card .num{font-family:var(--mono);font-size:clamp(40px,5vw,72px);font-weight:700;color:var(--accent-deep);line-height:1;letter-spacing:-.03em}
 .thesis-card h3{margin:22px 0 16px;font-weight:700;font-size:clamp(24px,2.4vw,34px);letter-spacing:-.02em}
 .thesis-card p{margin:0;font-size:16px;line-height:1.55;color:rgba(0,0,0,.66)}
 
@@ -242,28 +243,28 @@ main{display:block;background:var(--ink)}
    would pin over the accordion below it — disable sticky there. */
 @media (max-width:700px){.fellow-aside{position:static;top:auto}}
 .fellow-aside h1{margin:0;font-weight:800;font-size:clamp(38px,5.6vw,80px);line-height:.96;letter-spacing:-.035em}
-.fellow-aside p{margin:28px 0 0;max-width:420px;font-size:17px;line-height:1.55;color:rgba(255,255,255,.62)}
-.fellow-aside .net{margin-top:clamp(30px,4vh,46px);border:1px solid rgba(255,255,255,.16);border-radius:8px;background:rgba(255,255,255,.02);padding:14px 14px 10px}
+.fellow-aside p{margin:28px 0 0;max-width:420px;font-size:17px;line-height:1.55;color:rgba(23,24,26,.62)}
+.fellow-aside .net{margin-top:clamp(30px,4vh,46px);border:1px solid rgba(23,24,26,.15);border-radius:8px;background:rgba(23,24,26,.03);padding:14px 14px 10px}
 .fellow-aside .net canvas{width:100%;height:clamp(150px,20vh,190px)}
-.fellow-aside .net .cap{margin-top:10px;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)}
-.accordion{border-bottom:1px solid rgba(255,255,255,.16)}
-.acc-item{border-top:1px solid rgba(255,255,255,.16)}
-.acc-btn{width:100%;background:transparent;border:0;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:26px 4px;text-align:left;transition:opacity .18s}
+.fellow-aside .net .cap{margin-top:10px;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(23,24,26,.5)}
+.accordion{border-bottom:1px solid rgba(23,24,26,.15)}
+.acc-item{border-top:1px solid rgba(23,24,26,.15)}
+.acc-btn{width:100%;background:transparent;border:0;color:#17181A;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:26px 4px;text-align:left;transition:opacity .18s}
 .acc-btn:hover{opacity:.78}
 .acc-btn .lhs{display:flex;align-items:baseline;gap:18px}
-.acc-btn .anum{font-family:var(--mono);font-size:12px;color:rgba(255,255,255,.4)}
+.acc-btn .anum{font-family:var(--mono);font-size:12px;color:rgba(23,24,26,.4)}
 .acc-btn .atitle{font-weight:600;font-size:clamp(19px,1.9vw,27px);letter-spacing:-.015em}
 .acc-btn .sign{font-family:var(--mono);font-size:26px;color:var(--accent);line-height:1;font-weight:400;transition:transform .25s}
 .acc-btn[aria-expanded="true"] .sign{transform:rotate(45deg)}
 .acc-panel{max-height:0;opacity:0;visibility:hidden;overflow:hidden;transition:max-height .55s cubic-bezier(.2,0,0,1),opacity .4s ease-in-out,visibility .55s}
 .acc-btn[aria-expanded="true"] + .acc-panel{visibility:visible}
-.acc-panel p{margin:0 4px 26px 44px;max-width:560px;font-size:16px;line-height:1.6;color:rgba(255,255,255,.66)}
+.acc-panel p{margin:0 4px 26px 44px;max-width:560px;font-size:16px;line-height:1.6;color:rgba(23,24,26,.62)}
 @media (max-width:620px){.acc-panel p{margin-left:34px}}
 
 /* stat band */
-.stat-band{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:clamp(28px,4vw,56px);margin-top:clamp(40px,6vh,72px);border-top:1px solid rgba(255,255,255,.16);padding-top:clamp(32px,4vh,48px)}
+.stat-band{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:clamp(28px,4vw,56px);margin-top:clamp(40px,6vh,72px);border-top:1px solid rgba(23,24,26,.15);padding-top:clamp(32px,4vh,48px)}
 .stat .v{font-weight:800;font-size:clamp(44px,6vw,90px);line-height:1;letter-spacing:-.04em}
-.stat .l{margin-top:14px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.stat .l{margin-top:14px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:rgba(23,24,26,.55)}
 
 /* ============================================================
    MARQUEE
@@ -333,47 +334,60 @@ main{display:block;background:var(--ink)}
 }
 
 /* ============================================================
-   FELLOWSHIP GREEN THEME (scoped)
-   Dark, vivid-green variant of the design system — applies only
-   to fellowship.html via body.theme-green. Every override below
-   is scoped under .theme-green so the other 4 pages are untouched.
+   FELLOWSHIP LIGHT THEME (scoped)
+   Cream + green editorial variant — Swiss/minimal, print-ad feel.
+   Applies only to fellowship.html via body.theme-green. Every
+   override below is scoped under .theme-green so the other 4
+   pages are untouched.
    ============================================================ */
-.theme-green{--accent:#00CB50;--accent-hover:#00B347}
+.theme-green{--accent:#1B9E4B;--accent-hover:#008543}
 
-/* header + mobile drawer flip from accent-filled to dark */
-.theme-green .site-header{background:#111214;border-bottom-color:rgba(255,255,255,.14)}
-.theme-green .brand{color:#fff}
-.theme-green .nav-links a{color:#fff}
-.theme-green .nav-links a:hover{border-bottom-color:#fff}
-.theme-green .nav-links a[aria-current="page"]{border-bottom-color:#fff}
-.theme-green .nav-toggle{border-color:rgba(255,255,255,.4)}
-.theme-green .nav-toggle span{background:#fff}
-.theme-green .nav-cta{background:var(--accent);color:#000;font-weight:700}
-.theme-green .nav-cta:hover{background:#fff}
+/* header + mobile drawer: cream bg, ink brand + links (flip from the old dark theme) */
+.theme-green .site-header{background:#F6F4EE;border-bottom-color:rgba(23,24,26,.15)}
+.theme-green .brand{color:#17181A}
+.theme-green .nav-links a{color:#17181A}
+.theme-green .nav-links a:hover{border-bottom-color:#17181A}
+.theme-green .nav-links a[aria-current="page"]{border-bottom-color:#17181A}
+.theme-green .nav-toggle{border-color:rgba(23,24,26,.4)}
+.theme-green .nav-toggle span{background:#17181A}
+.theme-green .nav-cta{background:#17181A;color:#fff;font-weight:700}
+.theme-green .nav-cta:hover{background:#000}
 
-.theme-green .mobile-nav{background:#111214}
-.theme-green .mobile-nav a{color:#fff;border-bottom-color:rgba(255,255,255,.14)}
-.theme-green .mobile-nav a[aria-current="page"]{box-shadow:inset 4px 0 0 #fff}
-.theme-green .mobile-nav .m-cta{background:var(--accent);color:#000}
-.theme-green .mobile-nav .m-meta{color:rgba(255,255,255,.5)}
+.theme-green .mobile-nav{background:#F6F4EE}
+.theme-green .mobile-nav a{color:#17181A;border-bottom-color:rgba(23,24,26,.14)}
+.theme-green .mobile-nav a[aria-current="page"]{box-shadow:inset 4px 0 0 #17181A}
+.theme-green .mobile-nav .m-cta{background:#17181A;color:#fff}
+.theme-green .mobile-nav .m-meta{color:rgba(23,24,26,.5)}
 
-.theme-green ::selection{background:#00CB50;color:#000}
+.theme-green ::selection{background:#1B9E4B;color:#F6F4EE}
 .theme-green .stat .v{color:var(--accent)}
-/* .theme-green .btn:hover is already covered — the base .btn:hover rule
-   uses background:var(--accent), which resolves to green on this page. */
 
-/* status badge — written generically so it's reusable on any page */
-.badge{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.85);display:inline-flex;align-items:center;gap:10px;margin-bottom:30px}
+/* main content + closing CTA band: cream everywhere, no dark sections
+   except the primary CTA pill (see .fh-apply / .btn below) */
+.theme-green .bg-ink{background:#F6F4EE;color:#17181A}
+.theme-green .bg-accent{background:#F6F4EE;color:#17181A;border-top:1px solid rgba(23,24,26,.15)}
+
+/* the word "Fellowship" in the H1 picks up the accent green */
+.theme-green .acc-word{color:var(--accent)}
+
+/* primary CTA stays a dark ink pill even though the page is light,
+   with a green arrow glyph. .btn:hover keeps its inline background:#000
+   (higher specificity than the base .btn:hover rule) so hover already
+   stays dark without an override here. */
+.theme-green .btn .arr{color:var(--accent)}
+.theme-green .fh-apply{background:#17181A;color:#fff;font-weight:700}
+.theme-green .fh-apply:hover{background:#000;color:#fff}
+
+/* status badge — mono, uppercase, ink text, green pulse dot */
+.badge{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#17181A;display:inline-flex;align-items:center;gap:10px;margin-bottom:30px}
 .bdot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:bdot-pulse 2s infinite}
 @keyframes bdot-pulse{
-  0%{box-shadow:0 0 0 0 rgba(0,203,80,.6)}
-  100%{box-shadow:0 0 0 8px rgba(0,203,80,0)}
+  0%{box-shadow:0 0 0 0 rgba(27,158,75,.6)}
+  100%{box-shadow:0 0 0 8px rgba(27,158,75,0)}
 }
 
 /* stat + CTA row beside the fellowship hero copy */
 .fh-row{display:flex;align-items:center;gap:28px;flex-wrap:wrap;margin-top:34px}
 .fh-stat{display:flex;align-items:center;gap:14px}
 .fh-stat .v{font-weight:800;font-size:clamp(40px,4.5vw,64px);letter-spacing:-.04em;line-height:1;color:var(--accent)}
-.fh-stat .l{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);line-height:1.5}
-.theme-green .fh-apply{background:var(--accent);color:#000;font-weight:700}
-.theme-green .fh-apply:hover{background:#fff;color:#000}
+.fh-stat .l{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(23,24,26,.55);line-height:1.5}

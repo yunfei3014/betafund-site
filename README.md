@@ -51,6 +51,8 @@ zip -r frontend.zip index.html thesis.html companies.html fellowship.html apply.
 
 ## Design tokens
 
-Yellow editorial. Edit in `css/site.css` `:root`:
-`--accent:#FFD473` · `--gold-deep:#8A6A00` · `--ink:#000` · `--paper:#F6F4F1`.
+Cream + vermilion editorial. Edit in `css/site.css` `:root`:
+`--accent:#E04E26` · `--accent-hover:#C43D18` · `--accent-deep:#8F2E10` · `--ink:#000` · `--paper:#F5F2EC`.
+Fellowship (`fellowship.html`, `body.theme-green`) overrides to a light cream + green look:
+`--accent:#1B9E4B` · `--accent-hover:#008543`, ink text `#17181A` on a `#F6F4EE` background.
 Type: Helvetica Neue (display/body) + Space Mono (labels/mono).
