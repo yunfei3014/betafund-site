@@ -336,13 +336,18 @@
       var type = canvas.getAttribute('data-motif') || 'mesh';
       var tone = canvas.getAttribute('data-tone') || 'ink';
       var animated = canvas.getAttribute('data-animated') !== '0' && motion;
-      var m = { canvas: canvas, ctx: ctx, type: type, tone: tone, animated: animated, data: type === 'mesh' ? { nodes: [], packets: [] } : {}, w: 1, h: 1 };
+      // opt-in per-instance flags — read once, carried on the motif object (never global)
+      // so canvases without these attributes (index/companies) are untouched.
+      var nodesAttr = canvas.getAttribute('data-nodes');
+      var nodeCount = nodesAttr ? (parseInt(nodesAttr, 10) || 0) : 0;
+      var room = canvas.hasAttribute('data-room');
+      var m = { canvas: canvas, ctx: ctx, type: type, tone: tone, animated: animated, nodeCount: nodeCount, room: room, data: type === 'mesh' ? { nodes: [], packets: [] } : {}, w: 1, h: 1 };
       sizeMotif(m);
-      if (m.type === 'mesh') m.data = makeMesh(m.w, m.h);
+      if (m.type === 'mesh') m.data = makeMesh(m.w, m.h, m.nodeCount, m.room);
       drawMotif(m, 0);
       return m;
     });
-    window.addEventListener('resize', function () { motifs.forEach(function (m) { sizeMotif(m); if (m.type === 'mesh') m.data = makeMesh(m.w, m.h); drawMotif(m, performance.now()); }); });
+    window.addEventListener('resize', function () { motifs.forEach(function (m) { sizeMotif(m); if (m.type === 'mesh') m.data = makeMesh(m.w, m.h, m.nodeCount, m.room); drawMotif(m, performance.now()); }); });
     if (motion && motifs.some(function (m) { return m.animated; })) {
       animate(function () {
         var t = performance.now();
@@ -350,13 +355,34 @@
       });
     }
   }
-  function makeMesh(w, h) {
-    var area = Math.max(1, w * h), count = Math.max(9, Math.min(24, Math.round(area / 3200))), nodes = [];
-    for (var i = 0; i < count; i++) nodes.push({ bx: 0.08 + Math.random() * 0.84, by: 0.12 + Math.random() * 0.76, ph: Math.random() * 6.28, sp: 0.6 + Math.random() * 1.0, amp: 0.022 + Math.random() * 0.032, hot: false, x: 0, y: 0 });
-    var hotN = Math.max(2, Math.round(count * 0.25));
-    for (var k = 0; k < hotN; k++) nodes[(k * 3) % count].hot = true;
-    var packets = [], pc = Math.max(2, Math.min(6, Math.round(count / 3)));
-    for (var j = 0; j < pc; j++) { var a = Math.floor(Math.random() * count), b = Math.floor(Math.random() * count); if (b === a) b = (a + 1) % count; packets.push({ a: a, b: b, off: Math.random(), sp: 0.18 + Math.random() * 0.22 }); }
+  // `forceCount` and `room` are optional opt-ins (fellowship's "20 founders, one
+  // room" canvas). Omitted (falsy), this reproduces the original mesh exactly —
+  // same default count formula, same random draw order — for index/companies.
+  function makeMesh(w, h, forceCount, room) {
+    var area = Math.max(1, w * h), n = forceCount || Math.max(9, Math.min(24, Math.round(area / 3200))), nodes = [];
+    // room mode: keep node base positions + drift amplitude clamped inside a
+    // hairline rect inset ~6% from the canvas edges, with a buffer for the
+    // node radius + hot pulse radius (~11px at full pulse).
+    var inset = 0.06, bufPx = 11, bufX = bufPx / w, bufY = bufPx / h;
+    for (var i = 0; i < n; i++) {
+      if (room) {
+        var amp = 0.022 + Math.random() * 0.032;
+        var halfX = (1 - inset * 2) / 2 - bufX, halfY = (1 - inset * 2) / 2 - bufY;
+        amp = Math.max(0.006, Math.min(amp, halfX, halfY));
+        var loX = inset + bufX + amp, hiX = 1 - inset - bufX - amp;
+        var loY = inset + bufY + amp, hiY = 1 - inset - bufY - amp;
+        var bx = loX + Math.random() * Math.max(0, hiX - loX);
+        var by = loY + Math.random() * Math.max(0, hiY - loY);
+        nodes.push({ bx: bx, by: by, ph: Math.random() * 6.28, sp: 0.6 + Math.random() * 1.0, amp: amp, hot: false, x: 0, y: 0 });
+      } else {
+        nodes.push({ bx: 0.08 + Math.random() * 0.84, by: 0.12 + Math.random() * 0.76, ph: Math.random() * 6.28, sp: 0.6 + Math.random() * 1.0, amp: 0.022 + Math.random() * 0.032, hot: false, x: 0, y: 0 });
+      }
+    }
+    var hotN = Math.max(2, Math.round(n * 0.25));
+    for (var k = 0; k < hotN; k++) nodes[(k * 3) % n].hot = true;
+    // ~4-6 packets read as introductions between two distinct founders/nodes.
+    var packets = [], pc = Math.max(2, Math.min(6, Math.round(n / 3)));
+    for (var j = 0; j < pc; j++) { var a = Math.floor(Math.random() * n), b = Math.floor(Math.random() * n); if (b === a) b = (a + 1) % n; packets.push({ a: a, b: b, off: Math.random(), sp: 0.18 + Math.random() * 0.22 }); }
     return { nodes: nodes, packets: packets };
   }
   function sizeMotif(m) {
@@ -384,6 +410,23 @@
       var N = m.data.nodes || [], light = m.tone === 'light';
       var lineRGB = light ? '255,255,255' : '0,0,0';
       var nodeCol = light ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.9)';
+      if (m.room) {
+        // hairline room, inset ~6% from the edges — same rgb as the mesh
+        // lines, at low alpha, with small corner ticks (blueprint-style).
+        var rIns = 0.06, rx = w * rIns, ry = h * rIns, rw = w * (1 - rIns * 2), rh = h * (1 - rIns * 2);
+        var rA = light ? 0.3 : 0.35, tick = 7;
+        ctx.save();
+        ctx.strokeStyle = 'rgba(' + lineRGB + ',' + rA + ')'; ctx.lineWidth = 1;
+        ctx.strokeRect(Math.round(rx) + 0.5, Math.round(ry) + 0.5, Math.round(rw) - 1, Math.round(rh) - 1);
+        ctx.strokeStyle = 'rgba(' + lineRGB + ',' + Math.min(0.6, rA * 1.7).toFixed(3) + ')';
+        ctx.beginPath();
+        ctx.moveTo(rx, ry + tick); ctx.lineTo(rx, ry); ctx.lineTo(rx + tick, ry);
+        ctx.moveTo(rx + rw - tick, ry); ctx.lineTo(rx + rw, ry); ctx.lineTo(rx + rw, ry + tick);
+        ctx.moveTo(rx + rw, ry + rh - tick); ctx.lineTo(rx + rw, ry + rh); ctx.lineTo(rx + rw - tick, ry + rh);
+        ctx.moveTo(rx + tick, ry + rh); ctx.lineTo(rx, ry + rh); ctx.lineTo(rx, ry + rh - tick);
+        ctx.stroke();
+        ctx.restore();
+      }
       N.forEach(function (nd) {
         nd.x = (nd.bx + Math.cos(t * 0.00024 * nd.sp + nd.ph) * nd.amp) * w;
         nd.y = (nd.by + Math.sin(t * 0.00028 * nd.sp + nd.ph) * nd.amp) * h;
