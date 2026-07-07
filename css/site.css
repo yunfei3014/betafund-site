@@ -3,9 +3,9 @@
    Yellow editorial. Mobile-first.
    ============================================================ */
 :root{
-  --accent:#E04E26;
-  --accent-hover:#C43D18;
-  --accent-deep:#8F2E10;
+  --accent:#5AD25E;
+  --accent-hover:#3BCA40;
+  --accent-deep:#1F7021;
   --ink:#000000;
   --paper:#F5F2EC;
   --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;
@@ -336,7 +336,7 @@ main{display:block;background:var(--ink)}
    override below is scoped under .theme-green so the other 4
    pages are untouched.
    ============================================================ */
-.theme-green{--accent:#1B9E4B;--accent-hover:#008543}
+.theme-green{--accent:#5AD25E;--accent-hover:#3BCA40}
 
 /* header + mobile drawer: cream bg, ink brand + links (flip from the old dark theme) */
 .theme-green .site-header{background:#F6F4EE;border-bottom-color:rgba(23,24,26,.15)}
@@ -355,8 +355,11 @@ main{display:block;background:var(--ink)}
 .theme-green .mobile-nav .m-cta{background:#17181A;color:#fff}
 .theme-green .mobile-nav .m-meta{color:rgba(23,24,26,.5)}
 
-.theme-green ::selection{background:#1B9E4B;color:#F6F4EE}
+.theme-green ::selection{background:#5AD25E;color:#17181A}
 .theme-green .stat .v{color:var(--accent)}
+/* small mono label on cream ("What you get") — bright green fails contrast as
+   small text here, so this one instance rides the deep token instead. */
+.theme-green .eyebrow.acc{color:var(--accent-deep)}
 
 /* main content + closing CTA band: cream everywhere, no dark sections
    except the primary CTA pill (see .fh-apply / .btn below) */
@@ -378,15 +381,15 @@ main{display:block;background:var(--ink)}
 .badge{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#17181A;display:inline-flex;align-items:center;gap:10px;margin-bottom:0}
 .bdot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:bdot-pulse 2s infinite}
 @keyframes bdot-pulse{
-  0%{box-shadow:0 0 0 0 rgba(27,158,75,.6)}
-  100%{box-shadow:0 0 0 8px rgba(27,158,75,0)}
+  0%{box-shadow:0 0 0 0 rgba(90,210,94,.6)}
+  100%{box-shadow:0 0 0 8px rgba(90,210,94,0)}
 }
 
 /* stat + CTA row at the foot of the fellowship hero */
 .fh-row{display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap}
 .fh-stats{display:flex;gap:clamp(32px,6vw,64px);flex-wrap:wrap}
 .fh-stat{display:flex;flex-direction:column;gap:8px}
-.fh-stat .v{font-weight:800;font-size:clamp(38px,4.6vw,60px);letter-spacing:-.04em;line-height:1;color:#17181A}
+.fh-stat .v{font-weight:800;font-size:clamp(28px,min(4.6vw,7svh),60px);letter-spacing:-.04em;line-height:1;color:#17181A}
 .fh-stat .l{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(23,24,26,.55)}
 
 /* ============================================================
@@ -395,18 +398,18 @@ main{display:block;background:var(--ink)}
    llama mark, hairline, then a stat + CTA foot row. Every class
    here is fellowship-only (used nowhere else in the markup).
    ============================================================ */
-.fh-hero{background:#F6F4EE;color:#17181A;min-height:100svh;display:flex;padding:calc(var(--header-h) + clamp(28px,5vh,48px)) var(--pad-x) clamp(32px,5vh,56px)}
-.fh-hero-wrap{display:flex;flex-direction:column;justify-content:space-between;gap:clamp(36px,6vh,72px);flex:1;width:100%}
+.fh-hero{background:#F6F4EE;color:#17181A;min-height:100svh;display:flex;padding:calc(var(--header-h) + clamp(14px,3.2svh,48px)) var(--pad-x) clamp(16px,3.2svh,56px)}
+.fh-hero-wrap{display:flex;flex-direction:column;justify-content:space-between;gap:clamp(14px,4svh,72px);flex:1;width:100%}
 
 .fh-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
 .fh-url{font-family:var(--mono);font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:rgba(23,24,26,.42)}
 
 .fh-mid{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(24px,5vw,64px);align-items:center}
-.fh-copy h1{margin:0;font-weight:800;font-size:clamp(44px,7.6vw,110px);line-height:.95;letter-spacing:-.04em}
-.fh-copy p{margin:clamp(20px,3vh,30px) 0 0;max-width:46ch;font-size:clamp(18px,1.6vw,24px);line-height:1.5;color:rgba(23,24,26,.62)}
+.fh-copy h1{margin:0;font-weight:800;font-size:clamp(36px,min(9vw,14svh),110px);line-height:.95;letter-spacing:-.04em}
+.fh-copy p{margin:clamp(10px,min(3vh,2.6svh),30px) 0 0;max-width:46ch;font-size:clamp(15px,min(1.6vw,2.6svh),24px);line-height:1.45;color:rgba(23,24,26,.62)}
 .fh-copy p strong{color:#17181A;font-weight:700}
 .fh-mark{display:flex;align-items:center;justify-content:center}
-.fh-mark img{width:clamp(240px,27vw,380px);height:auto}
+.fh-mark img{width:clamp(160px,min(27vw,43svh),380px);height:auto}
 
 .fh-hr{border-top:1px solid rgba(23,24,26,.15)}
 

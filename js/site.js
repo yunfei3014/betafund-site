@@ -6,7 +6,7 @@
   'use strict';
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var motion = !reduce;
-  var ACCENT = '#E04E26';
+  var ACCENT = '#5AD25E';
   var accentColor = function () {
     // read off <body> so page-scoped themes (body.theme-green) are honored
     var v = getComputedStyle(document.body).getPropertyValue('--accent').trim();
