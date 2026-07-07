@@ -237,17 +237,13 @@ main{display:block;background:var(--ink)}
 /* ============================================================
    FELLOWSHIP
    ============================================================ */
-.fellow-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(36px,5vw,80px);align-items:start}
-.fellow-aside{position:sticky;top:calc(var(--header-h) + 32px)}
-/* once the fellowship grid collapses to one column (~692px), a sticky aside
-   would pin over the accordion below it — disable sticky there. */
-@media (max-width:700px){.fellow-aside{position:static;top:auto}}
-.fellow-aside h1{margin:0;font-weight:800;font-size:clamp(38px,5.6vw,80px);line-height:.96;letter-spacing:-.035em}
-.fellow-aside p{margin:28px 0 0;max-width:420px;font-size:17px;line-height:1.55;color:rgba(23,24,26,.62)}
-.fellow-aside .net{margin-top:clamp(30px,4vh,46px);border:1px solid rgba(23,24,26,.15);border-radius:8px;background:rgba(23,24,26,.03);padding:14px 14px 10px}
-.fellow-aside .net canvas{width:100%;height:clamp(150px,20vh,190px)}
-.fellow-aside .net .cap{margin-top:10px;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(23,24,26,.5)}
-.accordion{border-bottom:1px solid rgba(23,24,26,.15)}
+/* signature mesh block — now a full-width block in its own pushed-down
+   section rather than a sidebar item, so it's styled standalone (no longer
+   scoped under a .fellow-aside parent that no longer exists in the markup). */
+.net{margin-top:clamp(32px,5vh,56px);border:1px solid rgba(23,24,26,.15);border-radius:8px;background:rgba(23,24,26,.03);padding:16px 16px 12px}
+.net canvas{width:100%;height:clamp(200px,28vh,300px)}
+.net .cap{margin-top:12px;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(23,24,26,.5)}
+.accordion{margin-top:clamp(40px,6vh,64px);border-bottom:1px solid rgba(23,24,26,.15)}
 .acc-item{border-top:1px solid rgba(23,24,26,.15)}
 .acc-btn{width:100%;background:transparent;border:0;color:#17181A;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:26px 4px;text-align:left;transition:opacity .18s}
 .acc-btn:hover{opacity:.78}
@@ -361,14 +357,6 @@ main{display:block;background:var(--ink)}
 
 .theme-green ::selection{background:#1B9E4B;color:#F6F4EE}
 .theme-green .stat .v{color:var(--accent)}
-.theme-green .stat-band{grid-template-columns:repeat(2,minmax(0,1fr)) auto;align-items:start}
-.theme-green .stat-mark{grid-column:3;grid-row:1/3;align-self:center;justify-self:end;display:flex}
-.theme-green .stat-mark img{height:clamp(150px,15vw,190px);width:auto}
-@media (max-width:820px){
-  .theme-green .stat-band{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
-  .theme-green .stat-mark{grid-column:auto;grid-row:auto;align-self:start;justify-self:start}
-  .theme-green .stat-mark img{height:120px}
-}
 
 /* main content + closing CTA band: cream everywhere, no dark sections
    except the primary CTA pill (see .fh-apply / .btn below) */
@@ -387,15 +375,45 @@ main{display:block;background:var(--ink)}
 .theme-green .fh-apply:hover{background:#000;color:#fff}
 
 /* status badge — mono, uppercase, ink text, green pulse dot */
-.badge{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#17181A;display:inline-flex;align-items:center;gap:10px;margin-bottom:30px}
+.badge{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#17181A;display:inline-flex;align-items:center;gap:10px;margin-bottom:0}
 .bdot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:bdot-pulse 2s infinite}
 @keyframes bdot-pulse{
   0%{box-shadow:0 0 0 0 rgba(27,158,75,.6)}
   100%{box-shadow:0 0 0 8px rgba(27,158,75,0)}
 }
 
-/* stat + CTA row beside the fellowship hero copy */
-.fh-row{display:flex;align-items:center;gap:28px;flex-wrap:wrap;margin-top:34px}
-.fh-stat{display:flex;align-items:center;gap:14px}
-.fh-stat .v{font-weight:800;font-size:clamp(40px,4.5vw,64px);letter-spacing:-.04em;line-height:1;color:var(--accent)}
-.fh-stat .l{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(23,24,26,.55);line-height:1.5}
+/* stat + CTA row at the foot of the fellowship hero */
+.fh-row{display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap}
+.fh-stats{display:flex;gap:clamp(32px,6vw,64px);flex-wrap:wrap}
+.fh-stat{display:flex;flex-direction:column;gap:8px}
+.fh-stat .v{font-weight:800;font-size:clamp(38px,4.6vw,60px);letter-spacing:-.04em;line-height:1;color:#17181A}
+.fh-stat .l{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(23,24,26,.55)}
+
+/* ============================================================
+   FELLOWSHIP — full-viewport landing hero
+   Cream editorial: badge/url row, big two-line lockup beside the
+   llama mark, hairline, then a stat + CTA foot row. Every class
+   here is fellowship-only (used nowhere else in the markup).
+   ============================================================ */
+.fh-hero{background:#F6F4EE;color:#17181A;min-height:100svh;display:flex;padding:calc(var(--header-h) + clamp(28px,5vh,48px)) var(--pad-x) clamp(32px,5vh,56px)}
+.fh-hero-wrap{display:flex;flex-direction:column;justify-content:space-between;gap:clamp(36px,6vh,72px);flex:1;width:100%}
+
+.fh-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.fh-url{font-family:var(--mono);font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:rgba(23,24,26,.42)}
+
+.fh-mid{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(24px,5vw,64px);align-items:center}
+.fh-copy h1{margin:0;font-weight:800;font-size:clamp(44px,7.6vw,110px);line-height:.95;letter-spacing:-.04em}
+.fh-copy p{margin:clamp(20px,3vh,30px) 0 0;max-width:46ch;font-size:clamp(18px,1.6vw,24px);line-height:1.5;color:rgba(23,24,26,.62)}
+.fh-copy p strong{color:#17181A;font-weight:700}
+.fh-mark{display:flex;align-items:center;justify-content:center}
+.fh-mark img{width:clamp(240px,27vw,380px);height:auto}
+
+.fh-hr{border-top:1px solid rgba(23,24,26,.15)}
+
+@media (max-width:820px){
+  .fh-mid{grid-template-columns:1fr}
+  .fh-mark{justify-content:flex-start}
+  .fh-mark img{width:180px}
+  .fh-row{flex-direction:column;align-items:flex-start;gap:24px}
+  .fh-row .fh-apply{width:100%;justify-content:center}
+}
