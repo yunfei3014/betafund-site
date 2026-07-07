@@ -361,6 +361,8 @@ main{display:block;background:var(--ink)}
 
 .theme-green ::selection{background:#1B9E4B;color:#F6F4EE}
 .theme-green .stat .v{color:var(--accent)}
+.theme-green .stat-mark{display:flex;align-items:center;justify-content:center}
+.theme-green .stat-mark img{width:min(150px,70%);height:auto}
 
 /* main content + closing CTA band: cream everywhere, no dark sections
    except the primary CTA pill (see .fh-apply / .btn below) */
